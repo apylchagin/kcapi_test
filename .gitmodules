@@ -1,0 +1,6 @@
+[submodule "kcapi/code"]
+	path = kcapi/code
+	url = https://github.com/smuellerDD/libkcapi.git
+[submodule "gtest"]
+	path = gtest
+	url = https://github.com/google/googletest.git
