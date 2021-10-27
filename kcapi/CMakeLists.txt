@@ -64,7 +64,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES UNITY_BUILD OFF
                                                  FOLDER "external"
                                                  EXCLUDE_FROM_ALL ON)
 set(KCAPI_VERSION "${KCAPI_MAJVERSION}.${KCAPI_MINVERSION}.${KCAPI_PATCHLEVEL}")
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/code/lib)
+target_include_directories(${PROJECT_NAME} BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/code/lib)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DKCAPI_MAJVERSION=${KCAPI_MAJVERSION}
                                                    -DKCAPI_MINVERSION=${KCAPI_MINVERSION}
                                                    -DKCAPI_PATCHLEVEL=${KCAPI_PATCHLEVEL}
@@ -73,6 +73,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -DKCAPI_MAJVERSION=${KCAPI_MA
                                                    -DVERSION="${KCAPI_VERSION}")
 if(CMAKE_SYSTEM_NAME STREQUAL "Android")
     target_link_libraries(${PROJECT_NAME} PRIVATE log)
+endif ()
+if(CMAKE_SYSTEM_NAME MATCHES "Android|Linux")
+    target_compile_options(${PROJECT_NAME} PRIVATE -Werror -Wconversion -fvisibility=hidden -fstack-protector-strong
+                                                   -Wextra -Wall -pedantic -fwrapv --param ssp-buffer-size=4)
 endif ()
 
 set(local_link_flags -Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/code/lib/version.lds)
