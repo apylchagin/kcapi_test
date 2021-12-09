@@ -2,6 +2,8 @@
 
 CURR=$(pwd)
 
+git submodule update --init --recursive
+
 pushd kcapi/code
 autoreconf -i
 #./configure --enable-shared
