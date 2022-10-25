@@ -4,6 +4,13 @@ CURR=$(pwd)
 
 git submodule update --init --recursive
 
+if [ -z "$(which autoreconf)" ]; then
+    echo " plz, install 'sudo apt install autoconf'"
+    exit 1
+fi
+
+echo "make sure the autoconf and libtool are installed"
+
 pushd kcapi/code
 autoreconf -i
 #./configure --enable-shared
